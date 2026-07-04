@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Azad Mess - ID Card</title>
+<style>
+  :root{
+    --navy-dark:#1b2a4a;
+    --navy-light:#2c3e63;
+    --bg:#e9ebf0;
+    --card:#ffffff;
+    --label:#8a93a3;
+    --value:#1c1c1c;
+    --accent-red:#e0433f;
+    --accent-green:#1fae6b;
+    --icon-blue:#3f6fd1;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--bg);
+    font-family:'Segoe UI', Arial, sans-serif;
+  }
+  .card{
+    width:400px;
+    background:var(--card);
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 10px 30px rgba(0,0,0,0.12);
+  }
+  .header{
+    background:linear-gradient(120deg, var(--navy-dark), var(--navy-light));
+    color:#fff;
+    padding:20px 24px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .header .icon{font-size:22px;}
+  .header h1{
+    margin:0;
+    font-size:20px;
+    letter-spacing:1px;
+    font-weight:700;
+  }
+  .body{
+    padding:24px;
+  }
+  .profile{
+    display:flex;
+    gap:18px;
+  }
+  .photo{
+    width:110px;
+    height:130px;
+    border-radius:8px;
+    object-fit:cover;
+    background:#ccc;
+    flex-shrink:0;
+  }
+  .info h2{
+    margin:0 0 10px 0;
+    font-size:19px;
+    font-weight:800;
+    color:var(--value);
+  }
+  .info-row{
+    display:flex;
+    align-items:flex-start;
+    gap:8px;
+    font-size:13.5px;
+    margin-bottom:8px;
+  }
+  .info-row .icon{
+    color:var(--icon-blue);
+    width:16px;
+    flex-shrink:0;
+    margin-top:2px;
+  }
+  .info-row .label{
+    color:var(--label);
+    min-width:98px;
+    font-weight:600;
+  }
+  .info-row .value{
+    color:var(--value);
+    font-weight:700;
+  }
+  .info-row .value.validity{
+    color:var(--accent-red);
+  }
+  .divider{
+    border:none;
+    border-top:1px solid #eaeaea;
+    margin:22px 0 0 0;
+  }
+  .footer{
+    padding:22px 24px 26px;
+    text-align:center;
+  }
+  .dashed{
+    border:none;
+    border-top:2px dashed #d3d3d3;
+    margin:0;
+  }
+  .timer-wrap{
+    position:relative;
+    padding:14px 0 4px;
+  }
+  .timer-wrap .circle{
+    position:absolute;
+    top:50%;
+    width:14px;
+    height:14px;
+    border-radius:50%;
+    background:var(--bg);
+    border:2px solid #d3d3d3;
+    transform:translateY(-50%);
+  }
+  .timer-wrap .circle.left{left:-38px;}
+  .timer-wrap .circle.right{right:-38px;}
+  .date{
+    color:#9a9a9a;
+    font-size:13px;
+    letter-spacing:0.5px;
+    margin-bottom:4px;
+  }
+  .time{
+    color:var(--accent-green);
+    font-size:26px;
+    font-weight:800;
+    letter-spacing:1px;
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="header">
+    <span class="icon">🍴</span>
+    <h1>AZAD MESS</h1>
+  </div>
+
+  <div class="body">
+    <div class="profile">
+      <img class="photo" src="C:\Users\sr558\OneDrive\Desktop\mess card\WhatsApp Image 2026-07-04 at 2.51.59 PM.jpeg" alt="Student photo">
+      <div class="info">
+        <h2>SHUBHAM KUMAR</h2>
+        <div class="info-row">
+          <span class="icon">📋</span>
+          <span class="label">Enrollment No.</span>
+          <span class="value">2403051051118</span>
+        </div>
+        <div class="info-row">
+          <span class="icon">🏢</span>
+          <span class="label">Hostel</span>
+          <span class="value">AZAD BHAWAN - A</span>
+        </div>
+        <div class="info-row">
+          <span class="icon">📞</span>
+          <span class="label">Contact No.</span>
+          <span class="value">6299453272</span>
+        </div>
+        <div class="info-row">
+          <span class="icon">🎓</span>
+          <span class="label">Institute</span>
+          <span class="value">PIT-1</span>
+        </div>
+        <div class="info-row">
+          <span class="icon">📅</span>
+          <span class="label">Validity</span>
+          <span class="value validity">01-07-2026 to 30-06-2027</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="footer">
+    <div class="timer-wrap">
+      <span class="circle left"></span>
+      <hr class="dashed">
+      <span class="circle right"></span>
+    </div>
+    <div class="date" id="live-date">04-07-2026</div>
+    <div class="time" id="live-time">2:38:08 PM</div>
+    <div class="timer-wrap">
+      <hr class="dashed">
+    </div>
+  </div>
+</div>
+
+<script>
+  function pad(n){ return n.toString().padStart(2,'0'); }
+
+  function updateClock(){
+    const now = new Date();
+
+    // Date: DD-MM-YYYY
+    const dd = pad(now.getDate());
+    const mm = pad(now.getMonth()+1);
+    const yyyy = now.getFullYear();
+    document.getElementById('live-date').textContent = `${dd}-${mm}-${yyyy}`;
+
+    // Time: h:mm:ss AM/PM
+    let hours = now.getHours();
+    const minutes = pad(now.getMinutes());
+    const seconds = pad(now.getSeconds());
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // 0 -> 12
+    document.getElementById('live-time').textContent = `${hours}:${minutes}:${seconds} ${ampm}`;
+  }
+
+  updateClock();
+  setInterval(updateClock, 1000);
+</script>
+
+</body>
+</html>
